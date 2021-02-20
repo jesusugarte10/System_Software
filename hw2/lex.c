@@ -10,7 +10,29 @@ Mina Beshay
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "data.h"
+
+
+//Given enum for internal representation
+typedef enum {
+    nulsym = 1, identsym, numbersym, plussym, minussym,
+    multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
+    gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
+    periodsym, becomessym, beginsym, endsym, ifsym, thensym,
+    whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
+    readsym , elsesym
+} token_type;
+
+//struct used to contain all tokens details
+typedef struct {
+    token_type tokenID;
+    int numberValue;
+    char name[12];
+}tokenStruct;
+
+extern tokenStruct lexList[5000];
+extern int lexListIndex;
+
+
 
 //For Reserved Words
 const char* reservedWords[]={"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
@@ -36,14 +58,7 @@ int main (void){
     
     //Declaring file pointers
     FILE* ifp;
-    FILE* ofp;
-    
-    char filename[20];
-    printf("What is the name of your test file?\n");
-    scanf("%s", filename);
-
-    ifp = fopen(filename, "r");
-    ofp = fopen("lexoutput.txt", "w");
+    ifp = fopen("test.txt", "r");
 
     //Variable Declarations
     int i,j=0,k=0;
@@ -61,7 +76,7 @@ int main (void){
     int numberListIndex=0;
     int variableNamesListIndex=0;*/
 
-    ifp=fopen(filename,"r");
+    ifp=fopen("test.txt","r");
     c=fgetc(ifp);
     //Ignores spaces, tabs, and newlines aka whitespace
     while(c!=EOF){
@@ -364,28 +379,32 @@ int main (void){
         }
 
     }
+
+
+
+
     //Prints out the Lexeme List, separated by "|"
     
     /**new for struct, instead of array**/
     //Takes care of variable names, always represented by "variableName | 2"
-    fprintf(ofp,"%d", lexList[0].tokenID);
+    printf("%d", lexList[0].tokenID);
     if(lexList[0].tokenID==2){
-        fprintf(ofp,"|%s", lexList[0].name);
+        printf("|%s", lexList[0].name);
     }
     //Takes care of numbers, always represented by "number | 3"
     else if(lexList[0].tokenID==3){
-        fprintf(ofp,"|%d",lexList[0].numberValue);
+        printf("|%d",lexList[0].numberValue);
     }
     //prints out variable names in Lexeme List
     for(i=1;i<lexListIndex;i++){
-        fprintf(ofp,"|%d", lexList[i].tokenID);
+        printf("|%d", lexList[i].tokenID);
         if(lexList[i].tokenID==2){
-            fprintf(ofp,"|%s", lexList[i].name);
+            printf("|%s", lexList[i].name);
         }
         else if(lexList[i].tokenID==3){
-            fprintf(ofp,"|%d",lexList[i].numberValue);
+            printf("|%d",lexList[i].numberValue);
         }
     }
+    printf("\n");
     fclose(ifp);
-    fclose(ofp);
 }
