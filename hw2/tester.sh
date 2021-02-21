@@ -37,3 +37,4 @@ if [[ $correct != 0 ]]; then
 else
 	echo "pass"
 fi
+rm output.txt

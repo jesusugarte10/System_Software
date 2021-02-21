@@ -103,11 +103,10 @@ int main (void){
             //Prints Error 3 if the variable name is too long
             while(isalpha(c=fgetc(ifp))||isdigit(c)){
                 if(index>10){
-                    //printf("Error 3: Name too long.\n");
+                    printf("Error 3: Name too long.\n");
 
                     //Error Checking
                     while (isalpha(c=fgetc(ifp))||isdigit(c)) {
-
                     }
                     errorHolder=1;
 
@@ -210,7 +209,7 @@ int main (void){
             //Prints Error 2 if the number is too long
             while(isdigit(c=fgetc(ifp))){
                 if(place>4){
-                    //printf("Error 2: Number too long.\n");
+                    printf("Error 2: Number too long.\n");
 
                     //Error checking
                     while (isdigit(c=fgetc(ifp))) {
@@ -227,7 +226,7 @@ int main (void){
 
             //Prints Error 1 if the variable starts with a digit, and not a number
             if(isalpha(c)){
-            //printf("Error 1: Variable does not start with letter.\n");
+            printf("Error 1: Variable does not start with letter.\n");
                 while(isalpha(c=fgetc(ifp))||isdigit(c)){
 
                 }
@@ -369,12 +368,12 @@ int main (void){
                     }
                     //Prints Error 4 for invalid symbols
                     else{
-                        //printf("Error 4: Invalid symbols.\n");
+                        printf("Error 4: Invalid symbols.\n");
                     }
                     break;
                     //Prints Error 4 for invalid symbols
                 default:
-                    //printf("Error 4: Invalid symbols.\n");
+                    printf("Error 4: Invalid symbols.\n");
                     break;
             }
         }
@@ -388,26 +387,27 @@ int main (void){
 
 
 
-    //Prints out the Lexeme List, separated by "|"
+    //Prints out the Lexeme List, separated by " "
     
+    printf("Token List: \n");
     /**new for struct, instead of array**/
     //Takes care of variable names, always represented by "variableName | 2"
     printf("%d", lexList[0].tokenID);
     if(lexList[0].tokenID==2){
-        printf("|%s", lexList[0].name);
+        printf(" %s", lexList[0].name);
     }
     //Takes care of numbers, always represented by "number | 3"
     else if(lexList[0].tokenID==3){
-        printf("|%d",lexList[0].numberValue);
+        printf(" %d",lexList[0].numberValue);
     }
     //prints out variable names in Lexeme List
     for(i=1;i<lexListIndex;i++){
-        printf("|%d", lexList[i].tokenID);
+        printf(" %d", lexList[i].tokenID);
         if(lexList[i].tokenID==2){
-            printf("|%s", lexList[i].name);
+            printf(" %s", lexList[i].name);
         }
         else if(lexList[i].tokenID==3){
-            printf("|%d",lexList[i].numberValue);
+            printf(" %d",lexList[i].numberValue);
         }
     }
     printf("\n");

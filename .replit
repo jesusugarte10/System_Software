@@ -1,2 +1,2 @@
 language = "bash"
-run = "hw2/tester.sh"
+run = "cd hw2; bash tester.sh"
