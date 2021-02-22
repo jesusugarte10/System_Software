@@ -1,33 +1,21 @@
-/* University of Central Florida
-Lexical Analyzer/Scanner
-
-Members:
-Jesus Ugarte
-Mina Beshay
- */
-
-
-
-//JESUS we aren't using this
-//????????????/?????????????????????
-
-
-
+/**Uses Structs!**/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 
 
-//Given enum for internal representation
-typedef enum {
-    nulsym = 1, identsym, numbersym, plussym, minussym,
-    multsym,  slashsym, oddsym, eqsym, neqsym, lessym, leqsym,
-    gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
-    periodsym, becomessym, beginsym, endsym, ifsym, thensym,
-    whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
-    readsym , elsesym
-} token_type;
+//FROM ABENDIX B In assignment desciption
+//Declaration of Token Types:
+typedef enum { 
+modsym = 1, identsym = 2, numbersym = 3, plussym = 4, minussym = 5, multsym = 6,  slashsym = 7, oddsym = 8, eqsym = 9, neqsym = 10, lessym = 11, leqsym = 12, gtrsym = 13, geqsym = 14, lparentsym = 15, rparentsym = 16, commasym = 17, semicolonsym = 18, periodsym = 19, becomessym = 20, beginsym = 21, endsym = 22, ifsym = 23, thensym = 24, whilesym = 25, dosym = 26, callsym = 27, constsym = 28, varsym = 29, procsym = 30, writesym = 31, readsym = 32, elsesym = 33, returnsym = 34} token_type;
+
+
+//For Reserved Special Symbols
+const char specialSymbols[]={'+', '-', '*', '/', '(', ')', '=', ',' , '.', '<', '>',  ';' , ':', '%'};
+
+//For Reserved Words || We are not using 'begin' and 'end' as stated in doc <- may need to use it? 
+const char* reservedWords[]={"const", "var", "procedure", "call", "if", "then", "else", "while", "do", "read", "write", "odd"};
 
 //struct used to contain all tokens details
 typedef struct {
@@ -36,25 +24,12 @@ typedef struct {
     char name[12];
 }tokenStruct;
 
-extern tokenStruct lexList[5000];
-extern int lexListIndex;
-
-//For Reserved Words
-const char* reservedWords[]={"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
-
-//For Reserved Special Symbols
-const char specialSymbols[]={'+', '-', '*', '/', '(', ')', '=', ',' , '.', '<', '>',  ';' , ':', '%'};
-
-//Lists for variables, numbers, and Lexeme
-/*int lexemeList[5000];
-int numberList[5000];
-char variableNamesList[500][12];*/
-
 tokenStruct lexList[5000];
 int lexListIndex = 0;
 
+
 //void lex(char* filename){
-int main (void){
+int main(int argc, char **argv){
 
     int count;
     for(count=0;count<5000;count++){
@@ -63,7 +38,8 @@ int main (void){
     
     //Declaring file pointers
     FILE* ifp;
-    ifp = fopen("in1.txt", "r");
+    
+    ifp = fopen(argv[1], "r");
 
     //Variable Declarations
     int i,j=0,k=0;
@@ -80,8 +56,6 @@ int main (void){
     /*int lexemeListIndex=0;
     int numberListIndex=0;
     int variableNamesListIndex=0;*/
-
-
     c=fgetc(ifp);
     //Ignores spaces, tabs, and newlines aka whitespace
     while(c!=EOF){
@@ -103,10 +77,11 @@ int main (void){
             //Prints Error 3 if the variable name is too long
             while(isalpha(c=fgetc(ifp))||isdigit(c)){
                 if(index>10){
-                    printf("Error 3: Name too long.\n");
+                    //printf("Error 3: Name too long.\n");
 
                     //Error Checking
                     while (isalpha(c=fgetc(ifp))||isdigit(c)) {
+
                     }
                     errorHolder=1;
 
@@ -209,7 +184,7 @@ int main (void){
             //Prints Error 2 if the number is too long
             while(isdigit(c=fgetc(ifp))){
                 if(place>4){
-                    printf("Error 2: Number too long.\n");
+                    //printf("Error 2: Number too long.\n");
 
                     //Error checking
                     while (isdigit(c=fgetc(ifp))) {
@@ -226,7 +201,7 @@ int main (void){
 
             //Prints Error 1 if the variable starts with a digit, and not a number
             if(isalpha(c)){
-            printf("Error 1: Variable does not start with letter.\n");
+            //printf("Error 1: Variable does not start with letter.\n");
                 while(isalpha(c=fgetc(ifp))||isdigit(c)){
 
                 }
@@ -368,12 +343,12 @@ int main (void){
                     }
                     //Prints Error 4 for invalid symbols
                     else{
-                        printf("Error 4: Invalid symbols.\n");
+                        //printf("Error 4: Invalid symbols.\n");
                     }
                     break;
                     //Prints Error 4 for invalid symbols
                 default:
-                    printf("Error 4: Invalid symbols.\n");
+                    //printf("Error 4: Invalid symbols.\n");
                     break;
             }
         }
@@ -383,13 +358,8 @@ int main (void){
         }
 
     }
-
-
-
-
-    //Prints out the Lexeme List, separated by " "
+    //Prints out the Lexeme List, separated by "|"
     
-    printf("Token List: \n");
     /**new for struct, instead of array**/
     //Takes care of variable names, always represented by "variableName | 2"
     printf("%d", lexList[0].tokenID);
@@ -410,6 +380,5 @@ int main (void){
             printf(" %d",lexList[i].numberValue);
         }
     }
-    printf("\n");
     fclose(ifp);
 }
