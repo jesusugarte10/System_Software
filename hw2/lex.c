@@ -1,7 +1,7 @@
 /* 
 University of Central Florida
+COP 3402 System Software: HW2
 Lexical Analyzer/Scanner
-COP 3402 System Software: HW1
 Member:
 Jesus Ugarte
  */
