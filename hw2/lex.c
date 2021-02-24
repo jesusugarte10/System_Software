@@ -34,20 +34,19 @@ const char* reserved_words[]={"const", "var", "procedure", "call", "begin", "end
 // Special Symbols given to us. (Modified)
 const char special_symbols[]={'+', '-', '*', '/', '(', ')', '=', ',' , '.', '<', '>',  ';' , ':', '%'};
 
-
-token_struct lex_list[5000];
-int lex_index = 0;
-
-
 int main(int argc, char *argv[]){
 
-    int counter;
-    for(counter = 0; counter < 5000; counter++){
-      lex_list[counter].token = 0;
-    }
-    
     // File pointer to open our input.
     FILE *ifp = fopen(argv[1], "r"); 
+    if(!ifp){
+        printf("can't open file\n");
+        return 1;
+    }
+
+    token_struct lex_list[10000];
+    for(int counter = 0; counter < 10000; counter++){
+      lex_list[counter].token = 0;
+    }
 
     // Variable declarations
     int i = 0; 
@@ -62,6 +61,7 @@ int main(int argc, char *argv[]){
     int comments = 0;
     //Looks ahead at next character read in
     int lookAhead=0;
+    int lex_index = 0;
 
     printf("Lexeme Table:\n");
     printf("\tlexeme\ttoken type\n");
