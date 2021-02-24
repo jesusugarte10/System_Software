@@ -112,7 +112,7 @@ int main(int argc, char *argv[]){
             //Compares the variable name to see if it is one of the reserved words
             int reservedSwitch=-1;
 
-            for(i=0; i<14;i++){
+            for(i=0; i<15;i++){
                 if(strcmp(string, reserved_words[i])==0){
                     reservedSwitch=i;
                 }
@@ -183,7 +183,7 @@ int main(int argc, char *argv[]){
                     break;
                 //default case when it is a symbol
                 default:
-                    if(strlen(string) < 10){
+                    if(strlen(string) < 11){
                         lex_list[lex_index].token = identsym;
                         strcpy(lex_list[lex_index].name,string);
                     }
@@ -191,8 +191,8 @@ int main(int argc, char *argv[]){
             }
             
             //Making sure only the right value is printed
-            if(strlen(string) < 10){
-                printf("\t%s\t%d\n", string, lex_list[lex_index].token);
+            if(strlen(string) < 11){
+                printf("%10s\t%d\n", string, lex_list[lex_index].token);
                 lex_index++;
             }
         }
@@ -242,7 +242,7 @@ int main(int argc, char *argv[]){
             lex_list[lex_index].token = numbersym;
             lex_list[lex_index].number_v = number;
 
-            printf("\t%d\t%d\n", lex_list[lex_index].number_v, lex_list[lex_index].token);
+            printf("%10d\t%d\n", lex_list[lex_index].number_v, lex_list[lex_index].token);
             lex_index++;
         }
 
@@ -387,19 +387,18 @@ int main(int argc, char *argv[]){
             if((spec>=0 ) && (spec<=13))
             {    //Handling cases where char is double digit based on token value
                 if(lex_list[lex_index - 1].token == becomessym)
-                    printf("\t%s\t%d\n", ":=", lex_list[lex_index - 1].token);
+                    printf("%10s\t%d\n", ":=", lex_list[lex_index - 1].token);
                 else if(lex_list[lex_index - 1].token == neqsym)
-                    printf("\t%s\t%d\n", "<>", lex_list[lex_index - 1].token);
+                    printf("%10s\t%d\n", "<>", lex_list[lex_index - 1].token);
                 else if(lex_list[lex_index - 1].token == leqsym)
-                    printf("\t%s\t%d\n", "<=", lex_list[lex_index - 1].token);
+                    printf("%10s\t%d\n", "<=", lex_list[lex_index - 1].token);
                 else if(lex_list[lex_index - 1].token == geqsym)
-                    printf("\t%s\t%d\n", ">=", lex_list[lex_index - 1].token);
+                    printf("%10s\t%d\n", ">=", lex_list[lex_index - 1].token);
                 else if((spec == 3) && (comments==0)){
-                    printf(" ");
                     comments = 1 ;
                 }
                 else
-                    printf("\t%c\t%d\n", special_symbols[spec], lex_list[lex_index - 1].token);
+                    printf("%10c\t%d\n", special_symbols[spec], lex_list[lex_index - 1].token);
             }
         }
         //if we aren't looking at next character, read in next as a part of a new variable/number/symbol
