@@ -395,7 +395,7 @@ int main(int argc, char *argv[]){
                 else if(lex_list[lex_index - 1].token == geqsym)
                     printf("\t%s\t%d\n", ">=", lex_list[lex_index - 1].token);
                 else if((spec == 3) && (comments==0)){
-                    printf("");
+                    printf(" ");
                     comments = 1 ;
                 }
                 else
@@ -428,5 +428,6 @@ int main(int argc, char *argv[]){
             printf(" %d", lex_list[i].number_v);
     }
     fclose(ifp);
+  printf("\n");
   return 0;
 }
