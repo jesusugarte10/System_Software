@@ -26,8 +26,6 @@ typedef struct {
   char name[12];
 }token_struct;
 
-token_struct lex_list[5000];
-int lex_index;
 
 // For Reserved Words given to us (Modified)
 const char* reserved_words[]={"const", "var", "procedure", "call", "begin", "end", "if", 
