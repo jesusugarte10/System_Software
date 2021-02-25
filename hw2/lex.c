@@ -4,6 +4,7 @@ COP 3402 System Software: HW2
 Lexical Analyzer/Scanner
 Member:
 Jesus Ugarte
+Mina Beshay
  */
 
 #include <stdio.h>
@@ -11,7 +12,6 @@ Jesus Ugarte
 #include <stdlib.h>
 #include <ctype.h>
 
-// Modified.
 typedef enum { 
     modsym = 1, identsym, numbersym, plussym, minussym, multsym, slashsym,
     oddsym, eqlsym, neqsym, lessym, leqsym, gtrsym, geqsym, lparentsym,
@@ -26,12 +26,11 @@ typedef struct {
   char name[12];
 }token_struct;
 
-
-// For Reserved Words given to us (Modified)
+// For Reserved Words given to us
 const char* reserved_words[]={"const", "var", "procedure", "call", "begin", "end", "if", 
 "then", "else", "while", "do", "read", "write", "odd", "return"};
 
-// Special Symbols given to us. (Modified)
+// Special Symbols given to us.
 const char special_symbols[]={'+', '-', '*', '/', '(', ')', '=', ',' , '.', '<', '>',  ';' , ':', '%'};
 
 int main(int argc, char *argv[]){
@@ -44,6 +43,7 @@ int main(int argc, char *argv[]){
     }
 
     token_struct lex_list[10000];
+
     for(int counter = 0; counter < 10000; counter++){
       lex_list[counter].token = 0;
     }
@@ -52,14 +52,9 @@ int main(int argc, char *argv[]){
     int i = 0; 
     int j = 0; 
     int k = 0;
-
-    // Errors variable to store them
     int errors;
-    // Variable to hold each character read in
     int character;
-    //For comments
     int comments = 0;
-    //Looks ahead at next character read in
     int lookAhead=0;
     int lex_index = 0;
 
@@ -67,7 +62,8 @@ int main(int argc, char *argv[]){
     printf("\tlexeme\ttoken type\n");
 
     character = fgetc(ifp);
-    //Ignores spaces, tabs, and newlines aka whitespace
+
+    //Main Program
     while(character != EOF){
         if((iscntrl(character) != 0) || isspace(character)){
             character = fgetc(ifp);
@@ -187,7 +183,6 @@ int main(int argc, char *argv[]){
                     }
                     break;
             }
-            
             //Making sure only the right value is printed
             if(strlen(string) < 11){
                 printf("%10s\t%d\n", string, lex_list[lex_index].token);
@@ -199,24 +194,21 @@ int main(int argc, char *argv[]){
             int number = character - '0';
             int d;
             int place = 1;
-
             lookAhead = 1;
 
             //Prints Error 2 if the number is too long
             while(isdigit(character = fgetc(ifp))){
                 if(place > 4){
                     printf("Error : Numbers cannot exceed 5 digits\n");
-
                     //Error checking
                     while (isdigit(character = fgetc(ifp))) {
 
                     }
                     errors = 1;
-                    //lookAhead=0;
                     break;
                 }
                 d=character - '0';
-                number=10*number+d;
+                number = 10 * number + d;
                 place++;
             }
             //Prints Error 1 if the variable starts with a digit, and not a number
@@ -281,13 +273,11 @@ int main(int argc, char *argv[]){
                         while(comments == 1){
                             if(character == '*'){
                                 character = fgetc(ifp);
-                                if(character == '/'){
+                                if(character == '/')
                                     comments = 0;
-                                }
                             }
-                            else{
+                            else
                                 character = fgetc(ifp);
-                            }
                         }
                     }
                     else{
@@ -380,7 +370,6 @@ int main(int argc, char *argv[]){
                     printf("Error : Invalid Symbol\n");
                     break;
             }
-            
             //Making sure only to print when there is a valid symbol
             if((spec>=0 ) && (spec<=13))
             {    //Handling cases where char is double digit based on token value
@@ -404,7 +393,6 @@ int main(int argc, char *argv[]){
             character = fgetc(ifp);
         }
     }
-
     printf("\nToken List:\n");
     
     //Takes care of variable names
