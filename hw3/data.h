@@ -35,3 +35,23 @@ typedef struct instruction
 
 //Used in Parser
 #define MAX_SYMBOL_TABLE_SIZE = 500
+symbol_table[MAX_SYMBOL_TABLE_SIZE];
+
+
+//Recommended data structure for the symbol.
+typedef struct {
+	int kind; 		// const = 1, var = 2, proc = 3
+	char name[12];	// name up to 11 chars
+	int val; 		// number (ASCII value)
+	int level; 		// L level
+	int addr; 		// M address
+} symbol;
+
+
+//Called by main
+void compile(char*);
+
+//called inside main.
+void lex(char *);
+void parser(void);
+void vm(void);

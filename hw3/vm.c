@@ -26,7 +26,7 @@ int base(int stack[], int level, int BP)
 }
 
 //Main function run
-int main(int argc, char **argv)
+void main(void)
 {
     // open infile pointer to read from input file
     FILE *ifp = fopen(argv[1], "r");
@@ -285,5 +285,4 @@ int main(int argc, char **argv)
     // close file and free stack
     fclose(ifp);
     free(stack);
-    return 0;
 }

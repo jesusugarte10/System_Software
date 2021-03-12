@@ -12,31 +12,16 @@ Parser
 #include <ctype.h>
 #include "data.h"
 
-//Recommended data structure for the symbol.
-typedef struct {
-	int kind; 		// const = 1, var = 2, proc = 3
-	char name[12];	// name up to 11 chars
-	int val; 		// number (ASCII value)
-	int level; 		// L level
-	int addr; 		// M address
-} symbol;
+void parser(void){
 
-symbol_table[MAX_SYMBOL_TABLE_SIZE];
+    // File pointer to open our input reading from lex output
+    FILE *ifp = fopen("lexoutput.txt", "r"); 
 
-
-
-//For constants, you must store kind, name and value.
-//For variables, you must store kind, name, L and M.
-
-int parser(int argc, char *argv[] ){
-
-    // File pointer to open our input.
-    FILE *ifp = fopen(argv[1], "r"); 
+    //generating file pointer to output from parser output
+    FILE *ofp = fopen("parserout.txt", "w");
 
     if(!ifp){
         printf("can't open file\n");
         return 1;
     }
-
-    return 0;
 }

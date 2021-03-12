@@ -19,10 +19,14 @@ const char* reserved_words[]={"const", "var", "procedure", "call", "begin", "end
 // Special Symbols given to us.
 const char special_symbols[]={'+', '-', '*', '/', '(', ')', '=', ',' , '.', '<', '>',  ';' , ':', '%'};
 
-int main(int argc, char *argv[]){
+void lex(char* filename){
 
     // File pointer to open our input.
-    FILE *ifp = fopen(argv[1], "r"); 
+    FILE *ifp = fopen(filename, "r"); 
+
+    //Save outpu into lexoutput.txt to be read on parser
+    FILE *ofp = fopen("lexoutput.txt", "w");
+
     if(!ifp){
         printf("can't open file\n");
         return 1;
@@ -44,8 +48,8 @@ int main(int argc, char *argv[]){
     int lookAhead=0;
     int lex_index = 0;
 
-    printf("Lexeme Table:\n");
-    printf("\tlexeme\ttoken type\n");
+    fprintf(ofp, "Lexeme Table:\n");
+    fprintf(ofp, "\tlexeme\ttoken type\n");
 
     character = fgetc(ifp);
 
@@ -69,7 +73,7 @@ int main(int argc, char *argv[]){
             //Prints Error 3 if the variable name is too long
             while(isalpha(character=fgetc(ifp))||isdigit(character)){
                 if(index > 10){
-                    printf("Error : Identifier names cannot exceed 11 characters\n");
+                    fprintf(ofp, "Error : Identifier names cannot exceed 11 characters\n");
 
                     //Error Checking
                     while (isalpha(character=fgetc(ifp))||isdigit(character)) {
@@ -185,7 +189,7 @@ int main(int argc, char *argv[]){
             //Prints Error 2 if the number is too long
             while(isdigit(character = fgetc(ifp))){
                 if(place > 4){
-                    printf("Error : Numbers cannot exceed 5 digits\n");
+                    fprintf(ofp, "Error : Numbers cannot exceed 5 digits\n");
                     //Error checking
                     while (isdigit(character = fgetc(ifp))) {
 
@@ -202,7 +206,7 @@ int main(int argc, char *argv[]){
                 
                 //handle error when identifiers cannot begin witha  digit
                 if(errors != 1)
-                    printf("Error : Identifiers cannot begin with a digit\n");
+                    fprintf(ofp, "Error : Identifiers cannot begin with a digit\n");
 
                 while(isalpha(character = fgetc(ifp)) || isdigit(character)){
                 }
@@ -218,7 +222,7 @@ int main(int argc, char *argv[]){
             lex_list[lex_index].token = numbersym;
             lex_list[lex_index].number_v = number;
 
-            printf("%10d\t%d\n", lex_list[lex_index].number_v, lex_list[lex_index].token);
+            fprintf(ofp, "%10d\t%d\n", lex_list[lex_index].number_v, lex_list[lex_index].token);
             lex_index++;
         }
 
@@ -343,7 +347,7 @@ int main(int argc, char *argv[]){
                     }
                     //Prints Error 4 for invalid symbols
                     else{
-                        printf("Error : Invalid Symbol\n");
+                        fprintf(ofp, "Error : Invalid Symbol\n");
                     }
                     break;
                 case 13:
@@ -353,25 +357,25 @@ int main(int argc, char *argv[]){
 
                 //Prints Error 4 for invalid symbols
                 default:
-                    printf("Error : Invalid Symbol\n");
+                    fprintf(ofp, "Error : Invalid Symbol\n");
                     break;
             }
             //Making sure only to print when there is a valid symbol
             if((spec>=0 ) && (spec<=13))
             {    //Handling cases where char is double digit based on token value
                 if(lex_list[lex_index - 1].token == becomessym)
-                    printf("%10s\t%d\n", ":=", lex_list[lex_index - 1].token);
+                    fprintf(ofp, "%10s\t%d\n", ":=", lex_list[lex_index - 1].token);
                 else if(lex_list[lex_index - 1].token == neqsym)
-                    printf("%10s\t%d\n", "<>", lex_list[lex_index - 1].token);
+                    fprintf(ofp, "%10s\t%d\n", "<>", lex_list[lex_index - 1].token);
                 else if(lex_list[lex_index - 1].token == leqsym)
-                    printf("%10s\t%d\n", "<=", lex_list[lex_index - 1].token);
+                    fprintf(ofp, "%10s\t%d\n", "<=", lex_list[lex_index - 1].token);
                 else if(lex_list[lex_index - 1].token == geqsym)
-                    printf("%10s\t%d\n", ">=", lex_list[lex_index - 1].token);
+                    fprintf(ofp, "%10s\t%d\n", ">=", lex_list[lex_index - 1].token);
                 else if((spec == 3) && (comments==0)){
                     comments = 1 ;
                 }
                 else
-                    printf("%10c\t%d\n", special_symbols[spec], lex_list[lex_index - 1].token);
+                    fprintf(ofp, "%10c\t%d\n", special_symbols[spec], lex_list[lex_index - 1].token);
             }
         }
         //if we aren't looking at next character, read in next as a part of a new variable/number/symbol
@@ -379,26 +383,27 @@ int main(int argc, char *argv[]){
             character = fgetc(ifp);
         }
     }
-    printf("\nToken List:\n");
+    fprintf(ofp, "\nToken List:\n");
     
     //Takes care of variable names
-    printf("%d", lex_list[0].token);
+    fprintf(ofp, "%d", lex_list[0].token);
     if(lex_list[0].token == 2){
-        printf(" %s", lex_list[0].name);
+        fprintf(ofp, " %s", lex_list[0].name);
     }
     //Takes care of numbers
     else if(lex_list[0].token == 3){
-        printf(" %d", lex_list[0].number_v);
+        fprintf(ofp, " %d", lex_list[0].number_v);
     }
     //prints out variable names in Lexeme List
     for(i = 1; i < lex_index; i++){
-        printf(" %d", lex_list[i].token);
+        fprintf(ofp, " %d", lex_list[i].token);
         if(lex_list[i].token == 2)
-            printf(" %s", lex_list[i].name);
+            fprintf(ofp, " %s", lex_list[i].name);
         else if(lex_list[i].token == 3)
-            printf(" %d", lex_list[i].number_v);
+            fprintf(ofp, " %d", lex_list[i].number_v);
     }
+
     fclose(ifp);
-  printf("\n");
-  return 0;
+    fclose(ofp);
+    fprintf(ofp, "\n");
 }

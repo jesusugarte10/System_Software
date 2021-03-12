@@ -10,6 +10,7 @@ Main Function
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "data.h"
 
 int main(int argc, char *argv[] ){
 
@@ -20,7 +21,7 @@ int main(int argc, char *argv[] ){
 
     //temporary variable to be used to check -l, -a, and -v
     char** temp = argv;
-    
+
         while (argc > 1) {
             if (strcmp(temp[1], "-l") == 0) {
                 lexoutput = 1;
@@ -52,9 +53,9 @@ void compile(char* filename) {
     //run lex.c with the test case. Lex outputs a file with the lexeme list that parser reads from
     lex(filename);
     
-    //run parser.c with the input file, that is the output file from lex. This then writes to another output file that the vm reads
-    parse();
+    //run parser.c with the input file, that is the output file from lex. 
+    parser();
     
-    //run vm.c with the input file, that is the output file from the parser. This then writes to a 3rd and final output file, which will have all the vm prints.
+    //run vm.c with the input file, that is the output file from the parser. 
     vm();
 }
