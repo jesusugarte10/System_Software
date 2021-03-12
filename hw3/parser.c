@@ -22,6 +22,6 @@ void parser(void){
 
     if(!ifp){
         printf("can't open file\n");
-        return 1;
+        //return 1;
     }
 }

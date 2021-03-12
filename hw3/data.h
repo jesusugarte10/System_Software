@@ -35,8 +35,6 @@ typedef struct instruction
 
 //Used in Parser
 #define MAX_SYMBOL_TABLE_SIZE = 500
-symbol_table[MAX_SYMBOL_TABLE_SIZE];
-
 
 //Recommended data structure for the symbol.
 typedef struct {
@@ -45,7 +43,9 @@ typedef struct {
 	int val; 		// number (ASCII value)
 	int level; 		// L level
 	int addr; 		// M address
-} symbol;
+} symbol_table;
+
+symbol_table[MAX_SYMBOL_TABLE_SIZE];
 
 
 //Called by main

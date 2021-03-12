@@ -29,7 +29,7 @@ void lex(char* filename){
 
     if(!ifp){
         printf("can't open file\n");
-        return 1;
+        //return 1;
     }
 
     token_struct lex_list[10000];

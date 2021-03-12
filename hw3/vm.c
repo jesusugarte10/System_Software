@@ -29,7 +29,7 @@ int base(int stack[], int level, int BP)
 void vm(void)
 {
     // open infile pointer to read from input file
-    FILE *ifp = fopen(argv[1], "r");
+    FILE *ifp = fopen("parserout.txt", "r");
 
     // prepare for PM/O cycle by declaring and initilizing variables
     int numInst = 0;
@@ -49,7 +49,7 @@ void vm(void)
     if (!ifp)
     {
         printf("can't read file");
-        return 0;
+        //return 1;
     }
 
     //Take the input file and store it in the program array of structs
