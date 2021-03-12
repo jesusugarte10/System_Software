@@ -22,26 +22,27 @@ int main(int argc, char *argv[] ){
     //temporary variable to be used to check -l, -a, and -v
     char** temp = argv;
 
-        while (argc > 1) {
-            if (strcmp(temp[1], "-l") == 0) {
-                lexoutput = 1;
-            }
-            if (strcmp(temp[1], "-a") == 0) {
-                codegenoutput = 1;
-            }
-            if (strcmp(temp[1], "-v") == 0) {
-                vmoutput = 1;
-            }
-            argc--;
-            temp++;
+    //If no argument is giver, procide instructions
+    if(argc <= 0){
+        printf("\n-l prints out the lexeme list from lex.c\n");
+        printf("-a prints out instructions from vm.c, which are passed to vm.c through the parser.c\n");
+        printf("-v prints out stack frames from vm.c\n\n");
+    }
+
+    while (argc > 1) {
+        if (strcmp(temp[1], "-l") == 0) {
+            lexoutput = 1;
         }
-
-    // if just ./compile, or just the test file is given, ie "./compile test.txt" then a usage function will be given.
-
-
+        if (strcmp(temp[1], "-a") == 0) {
+            codegenoutput = 1;
+        }
+        if (strcmp(temp[1], "-v") == 0) {
+            vmoutput = 1;
+        }
+        argc--;
+        temp++;
+    }
     // when you are out here, if argc is > 1, then argv[1] will be the source file, unless you want to read from a pre-determined input file,
-    // then you would check while (argc > 1) and glob the last one
-    // this sends the input file name to the compile function below
 
     compile(argv[1]);
     return 0;

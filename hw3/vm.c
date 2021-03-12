@@ -26,7 +26,7 @@ int base(int stack[], int level, int BP)
 }
 
 //Main function run
-void main(void)
+void vm(void)
 {
     // open infile pointer to read from input file
     FILE *ifp = fopen(argv[1], "r");
