@@ -1,30 +1,16 @@
-/* 
+/*
 University of Central Florida
-COP 3402 System Software: HW2
-Lexical Analyzer/Scanner
-Member:
+COP 3402 Systeam Software: HW3
 Jesus Ugarte
 Mina Beshay
- */
+Lexical Analyzer
+*/
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-
-typedef enum { 
-    modsym = 1, identsym, numbersym, plussym, minussym, multsym, slashsym,
-    oddsym, eqlsym, neqsym, lessym, leqsym, gtrsym, geqsym, lparentsym,
-    rparentsym, commasym, semicolonsym, periodsym, becomessym,
-    beginsym, endsym, ifsym, thensym, whilesym, dosym,callsym,
-    constsym, varsym, procsym, writesym, readsym, elsesym, returnsym
-} token_type;
-
-typedef struct {
-  token_type token;
-  int number_v;
-  char name[12];
-}token_struct;
+#include "data.h"
 
 // For Reserved Words given to us
 const char* reserved_words[]={"const", "var", "procedure", "call", "begin", "end", "if", 

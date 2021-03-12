@@ -1,23 +1,15 @@
 /*
 University of Central Florida
-COP 3402 Systeam Software: HW1
+COP 3402 Systeam Software: HW3
 Jesus Ugarte
 Mina Beshay
+Virtual Machine
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#define MAX_STACK_HEIGHT 50
-#define MAX_CODE_LENGTH 100
-
-typedef struct instruction
-{
-    int opcode;
-    int l;
-    int m;
-} instruction;
+#include "data.h"
 
 
 // Helper base function
